@@ -1,0 +1,7 @@
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "jsxBracketSameLine": false,
+  "overrides": [{ "files": "*.(j,t)s(,x)", "options": { "parser": "typescript" } }]
+}
