@@ -1,10 +1,11 @@
 import React from 'react';
 import './sampleCardOne.scss';
 import logoSvg from '../logo.svg';
+import { SampleCardOneType } from './SampleCardOne.type';
 
-const SampleCardOne = (): JSX.Element => (
+const SampleCardOne = ({number}: SampleCardOneType): JSX.Element => (
   <div className="card-container">
-    <h2>Card Header</h2>
+    <h2>Card Header {number}</h2>
     <img src={logoSvg} alt="" />
     <p>
       Lorem Ipsum is simply dummy text of the printing and typesetting industry.

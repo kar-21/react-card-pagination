@@ -1,3 +1,3 @@
 export interface ReactCardPaginationType {
-  children: React.ReactNode;
+  children: React.ReactNode[];
 }
