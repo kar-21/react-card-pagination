@@ -1,0 +1,10 @@
+.outer-container {
+  width: 100%;
+  display: flex;
+}
+
+.inner-container {
+  width: unset;
+  display: flex;
+  overflow-x: auto;
+}

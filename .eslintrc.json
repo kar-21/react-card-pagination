@@ -7,11 +7,12 @@
   "extends": ["airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "tsconfig.json",
-    "sourceType": "module"
+    "project": ["./tsconfig.json", "./tsconfig.eslint.json"]
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "arrow-body-style": ["error", "as-needed"],
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx", "tsx", "ts"] }
