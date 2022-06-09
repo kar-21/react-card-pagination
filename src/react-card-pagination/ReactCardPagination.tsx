@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { FaChevronRight, FaChevronLeft, FaCircle } from 'react-icons/fa';
 
 import './reactCardPagination.scss';
 import { ReactCardPaginationType } from './ReactCardPagination.type';
@@ -13,25 +13,46 @@ const ReactCardPagination = ({
   const myRef = useRef<HTMLDivElement>(null);
 
   const [step, setStep] = useState(0);
+  const [numberOfCardsPerPage, setNumberOfCardsPerPage] = useState<number>();
+  const [numberOfPage, setNumberOfPage] = useState<number>();
   const [currentChildren, setCurrentChildren] = useState(children);
 
-  const rotateRight = () => {
+  const calculatePages = () => {
     if (myRef.current) {
-      const numberOfCards = Math.floor(myRef.current.offsetWidth / cardWidth);
+      console.log('>>>>', myRef.current.offsetWidth);
+      const cardPerPage = Math.floor(myRef.current.offsetWidth / cardWidth);
+      setNumberOfCardsPerPage(cardPerPage);
+      const pages = Math.ceil(children.length / cardPerPage);
+      setNumberOfPage(pages);
+    }
+  };
+
+  useEffect(() => {
+    calculatePages();
+  }, [myRef.current]);
+
+  useLayoutEffect(() => {
+    window.addEventListener('resize', calculatePages);
+    return () => window.removeEventListener('resize', calculatePages);
+  }, []);
+
+  const rotateRight = () => {
+    if (numberOfCardsPerPage) {
+      console.log('>>>>right', numberOfCardsPerPage);
       const newChildren = [
-        ...currentChildren.slice(numberOfCards),
-        ...currentChildren.slice(0, numberOfCards),
+        ...currentChildren.slice(numberOfCardsPerPage),
+        ...currentChildren.slice(0, numberOfCardsPerPage),
       ];
       setCurrentChildren(newChildren);
     }
   };
 
   const rotateLeft = () => {
-    if (myRef.current) {
-      const numberOfCards = Math.floor(myRef.current.offsetWidth / cardWidth);
+    if (numberOfCardsPerPage) {
+      console.log('>>>>right', numberOfCardsPerPage);
       const newChildren = [
-        ...currentChildren.slice(-numberOfCards),
-        ...currentChildren.slice(0, -numberOfCards),
+        ...currentChildren.slice(-numberOfCardsPerPage),
+        ...currentChildren.slice(0, -numberOfCardsPerPage),
       ];
       setCurrentChildren(newChildren);
     }
@@ -47,24 +68,37 @@ const ReactCardPagination = ({
   };
 
   return (
-    <div className="outer-container">
-      <button
-        className="navigation-button"
-        type="button"
-        onClick={handleLeftClick}
-      >
-        <FaChevronLeft />
-      </button>
-      <div className="inner-container" ref={myRef}>
-        {currentChildren}
+    <div className="pagination">
+      <div className="outer-container">
+        <button
+          className="navigation-button"
+          type="button"
+          onClick={handleLeftClick}
+        >
+          <FaChevronLeft />
+        </button>
+        <div className="inner-container" ref={myRef}>
+          {currentChildren}
+        </div>
+        <button
+          className="navigation-button"
+          type="button"
+          onClick={handleRightClick}
+        >
+          <FaChevronRight />
+        </button>
       </div>
-      <button
-        className="navigation-button"
-        type="button"
-        onClick={handleRightClick}
-      >
-        <FaChevronRight />
-      </button>
+      <div className="dots-container">
+        {numberOfCardsPerPage && numberOfPage
+          ? Array(numberOfPage)
+            .fill(undefined)
+            .map((value, i) => (
+              <FaCircle
+                className={`dots ${step === i ? 'selected' : null}`}
+              />
+            ))
+          : null}
+      </div>
     </div>
   );
 };
