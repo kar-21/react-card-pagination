@@ -6,6 +6,7 @@ import { ReactCardPaginationType } from './ReactCardPagination.type';
 
 const ReactCardPagination = ({
   children,
+  cardWidth,
 }: ReactCardPaginationType): JSX.Element => {
   console.log(children);
 
@@ -16,7 +17,7 @@ const ReactCardPagination = ({
 
   const rotateRight = () => {
     if (myRef.current) {
-      const numberOfCards = Math.floor(myRef.current.offsetWidth / 470);
+      const numberOfCards = Math.floor(myRef.current.offsetWidth / cardWidth);
       const newChildren = [
         ...currentChildren.slice(numberOfCards),
         ...currentChildren.slice(0, numberOfCards),
@@ -27,7 +28,7 @@ const ReactCardPagination = ({
 
   const rotateLeft = () => {
     if (myRef.current) {
-      const numberOfCards = Math.floor(myRef.current.offsetWidth / 470);
+      const numberOfCards = Math.floor(myRef.current.offsetWidth / cardWidth);
       const newChildren = [
         ...currentChildren.slice(-numberOfCards),
         ...currentChildren.slice(0, -numberOfCards),
