@@ -91,12 +91,12 @@ const ReactCardPagination = ({
       <div className="dots-container">
         {numberOfCardsPerPage && numberOfPage
           ? Array(numberOfPage)
-            .fill(undefined)
-            .map((value, i) => (
-              <FaCircle
-                className={`dots ${step === i ? 'selected' : null}`}
-              />
-            ))
+              .fill(undefined)
+              .map((value, i) => (
+                <FaCircle
+                  className={`dots ${step === i ? 'selected' : null}`}
+                />
+              ))
           : null}
       </div>
     </div>
