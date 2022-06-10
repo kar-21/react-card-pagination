@@ -31,8 +31,8 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/indent": ["error", 2, { "MemberExpression": 2 }],
-    "no-console": "off",
+    "indent": ["error", 2, { "MemberExpression": 2 }],
+    "no-console": 1,
     "import/no-unresolved": [2, { "commonjs": true, "amd": true }],
     "import/named": 2,
     "import/namespace": 2,

@@ -8,8 +8,6 @@ const ReactCardPagination = ({
   children,
   cardWidth,
 }: ReactCardPaginationType): JSX.Element => {
-  console.log(children);
-
   const myRef = useRef<HTMLDivElement>(null);
 
   const [step, setStep] = useState(0);
@@ -19,7 +17,6 @@ const ReactCardPagination = ({
 
   const calculatePages = () => {
     if (myRef.current) {
-      console.log('>>>>', myRef.current.offsetWidth);
       const cardPerPage = Math.floor(myRef.current.offsetWidth / cardWidth);
       setNumberOfCardsPerPage(cardPerPage);
       const pages = Math.ceil(children.length / cardPerPage);
@@ -38,7 +35,6 @@ const ReactCardPagination = ({
 
   const rotateRight = () => {
     if (numberOfCardsPerPage) {
-      console.log('>>>>right', numberOfCardsPerPage);
       const newChildren = [
         ...currentChildren.slice(numberOfCardsPerPage),
         ...currentChildren.slice(0, numberOfCardsPerPage),
@@ -49,7 +45,6 @@ const ReactCardPagination = ({
 
   const rotateLeft = () => {
     if (numberOfCardsPerPage) {
-      console.log('>>>>right', numberOfCardsPerPage);
       const newChildren = [
         ...currentChildren.slice(-numberOfCardsPerPage),
         ...currentChildren.slice(0, -numberOfCardsPerPage),
