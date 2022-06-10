@@ -12,8 +12,9 @@ const ReactCardPagination = ({
 
   const [step, setStep] = useState(0);
   const [numberOfCardsPerPage, setNumberOfCardsPerPage] = useState<number>();
-  const [numberOfPage, setNumberOfPage] = useState<number>();
+  const [numberOfPage, setNumberOfPage] = useState<number>(0);
   const [currentChildren, setCurrentChildren] = useState(children);
+  const [leftChildren, setLeftChildren] = useState<React.ReactNode[]>([]);
 
   const calculatePages = () => {
     if (myRef.current) {
@@ -35,31 +36,57 @@ const ReactCardPagination = ({
 
   const rotateRight = () => {
     if (numberOfCardsPerPage) {
-      const newChildren = [
-        ...currentChildren.slice(numberOfCardsPerPage),
-        ...currentChildren.slice(0, numberOfCardsPerPage),
-      ];
-      setCurrentChildren(newChildren);
+      let newCurrentChildren: React.ReactNode[];
+      let newLeftChildren: React.ReactNode[];
+      if (step === numberOfPage - 1) {
+        newCurrentChildren = children;
+        newLeftChildren = [];
+      } else {
+        newCurrentChildren = currentChildren.slice(numberOfCardsPerPage);
+        newLeftChildren = [
+          ...leftChildren,
+          ...currentChildren.slice(0, numberOfCardsPerPage),
+        ];
+      }
+      setCurrentChildren(newCurrentChildren);
+      setLeftChildren(newLeftChildren);
     }
   };
 
   const rotateLeft = () => {
     if (numberOfCardsPerPage) {
-      const newChildren = [
-        ...currentChildren.slice(-numberOfCardsPerPage),
-        ...currentChildren.slice(0, -numberOfCardsPerPage),
-      ];
-      setCurrentChildren(newChildren);
+      let newCurrentChildren: React.ReactNode[];
+      let newLeftChildren: React.ReactNode[];
+      if (step === 0) {
+        const sliceLenght =
+          children.length % numberOfCardsPerPage
+            ? Math.floor(children.length / numberOfCardsPerPage) *
+              numberOfCardsPerPage
+            : (Math.floor(children.length / numberOfCardsPerPage) - 1) *
+              numberOfCardsPerPage;
+        newCurrentChildren = children.slice(sliceLenght, children.length);
+        newLeftChildren = children.slice(0, sliceLenght);
+      } else {
+        const slicedLeft = leftChildren?.slice(-numberOfCardsPerPage);
+        newCurrentChildren = [...slicedLeft, ...currentChildren];
+        newLeftChildren = leftChildren?.slice(0, -numberOfCardsPerPage);
+      }
+      setCurrentChildren(newCurrentChildren);
+      setLeftChildren(newLeftChildren);
     }
   };
 
   const handleLeftClick = () => {
     rotateLeft();
-    setStep((prev: number) => prev - 1);
+    setStep((prev: number) =>
+      prev - 1 < 0 ? prev + numberOfPage - 1 : prev - 1,
+    );
   };
   const handleRightClick = () => {
     rotateRight();
-    setStep((prev: number) => prev + 1);
+    setStep((prev: number) =>
+      prev + 1 < numberOfPage ? prev + 1 : prev + 1 - numberOfPage,
+    );
   };
 
   return (

@@ -5,7 +5,7 @@
     align-items: center;
 
     .inner-container {
-      width: unset;
+      width: inherit;
       display: flex;
       overflow-x: hidden;
     }
