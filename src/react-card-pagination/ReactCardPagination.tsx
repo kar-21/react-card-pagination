@@ -7,6 +7,7 @@ import { ReactCardPaginationType } from './ReactCardPagination.type';
 const ReactCardPagination = ({
   children,
   cardWidth,
+  isLoopPagination = true,
 }: ReactCardPaginationType): JSX.Element => {
   const myRef = useRef<HTMLDivElement>(null);
 
@@ -93,6 +94,7 @@ const ReactCardPagination = ({
     <div className="pagination">
       <div className="outer-container">
         <button
+          disabled={isLoopPagination ? false : step === 0}
           className="navigation-button"
           type="button"
           onClick={handleLeftClick}
@@ -103,6 +105,7 @@ const ReactCardPagination = ({
           {currentChildren}
         </div>
         <button
+          disabled={isLoopPagination ? false : step === numberOfPage - 1}
           className="navigation-button"
           type="button"
           onClick={handleRightClick}
