@@ -8,6 +8,7 @@ const ReactCardPagination = ({
   children,
   cardWidth,
   isLoopPagination = true,
+  hidePageIndicatorDots = false,
 }: ReactCardPaginationType): JSX.Element => {
   const myRef = useRef<HTMLDivElement>(null);
 
@@ -16,6 +17,8 @@ const ReactCardPagination = ({
   const [numberOfPage, setNumberOfPage] = useState<number>(0);
   const [currentChildren, setCurrentChildren] = useState(children);
   const [leftChildren, setLeftChildren] = useState<React.ReactNode[]>([]);
+
+  const dotRangeArray = Array.from(Array(numberOfPage).keys());
 
   const calculatePages = () => {
     if (myRef.current) {
@@ -57,14 +60,14 @@ const ReactCardPagination = ({
   const rotateLeft = () => {
     if (numberOfCardsPerPage) {
       if (isLoopPagination && step === 0) {
-        const sliceLenght =
+        const sliceLength =
           children.length % numberOfCardsPerPage
             ? Math.floor(children.length / numberOfCardsPerPage) *
               numberOfCardsPerPage
             : (Math.floor(children.length / numberOfCardsPerPage) - 1) *
               numberOfCardsPerPage;
-        const newCurrentChildren = children.slice(sliceLenght, children.length);
-        const newLeftChildren = children.slice(0, sliceLenght);
+        const newCurrentChildren = children.slice(sliceLength, children.length);
+        const newLeftChildren = children.slice(0, sliceLength);
         setCurrentChildren(newCurrentChildren);
         setLeftChildren(newLeftChildren);
       } else if (step !== 0) {
@@ -125,17 +128,18 @@ const ReactCardPagination = ({
           <FaChevronRight />
         </button>
       </div>
-      <div className="dots-container">
-        {numberOfCardsPerPage && numberOfPage
-          ? Array(numberOfPage)
-              .fill(undefined)
-              .map((value, i) => (
+      {!hidePageIndicatorDots && (
+        <div className="dots-container">
+          {numberOfCardsPerPage && numberOfPage
+            ? dotRangeArray.map((index) => (
                 <FaCircle
-                  className={`dots ${step === i ? 'selected' : null}`}
+                  key={`dot-${index}`}
+                  className={`dots ${step === index ? 'selected' : null}`}
                 />
               ))
-          : null}
-      </div>
+            : null}
+        </div>
+      )}
     </div>
   );
 };
