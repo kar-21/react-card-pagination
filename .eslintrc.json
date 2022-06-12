@@ -4,23 +4,38 @@
     "es2021": true
   },
   "root": true,
-  "extends": ["airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": ["./tsconfig.json", "./tsconfig.eslint.json"]
   },
-  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import",
+    "jsx-a11y",
+    "react-hooks",
+    "prettier"
+  ],
   "rules": {
     "react/function-component-definition": [
       2,
       { "namedComponents": "arrow-function" }
     ],
-    "arrow-body-style": ["error", "as-needed"],
+    "no-undef": "off",
+    // "arrow-body-style": ["error", "as-needed"],
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx", "tsx", "ts"] }
     ],
-    "react/jsx-one-expression-per-line": [0, { "allow": "literal" }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -30,14 +45,7 @@
         "ts": "never",
         "tsx": "never"
       }
-    ],
-    "indent": ["error", 2, { "MemberExpression": 2 }],
-    "no-console": 1,
-    "import/no-unresolved": [2, { "commonjs": true, "amd": true }],
-    "import/named": 2,
-    "import/namespace": 2,
-    "import/default": 2,
-    "import/export": 2
+    ]
   },
   "settings": {
     "import/resolver": {

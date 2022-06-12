@@ -3,7 +3,7 @@ import './sampleCardOne.scss';
 import logoSvg from '../logo.svg';
 import { SampleCardOneType } from './SampleCardOne.type';
 
-const SampleCardOne = ({number}: SampleCardOneType): JSX.Element => (
+const SampleCardOne = ({ number }: SampleCardOneType): JSX.Element => (
   <div className="card-container">
     <h2>Card Header {number}</h2>
     <img src={logoSvg} alt="" />
