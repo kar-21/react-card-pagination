@@ -14,18 +14,18 @@ const ReactCardPagination = ({
 
   const [step, setStep] = useState(0);
   const [numberOfCardsPerPage, setNumberOfCardsPerPage] = useState<number>();
-  const [numberOfPage, setNumberOfPage] = useState<number>(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
   const [currentChildren, setCurrentChildren] = useState(children);
   const [leftChildren, setLeftChildren] = useState<React.ReactNode[]>([]);
 
-  const dotRangeArray = Array.from(Array(numberOfPage).keys());
+  const dotRangeArray = Array.from(Array(numberOfPages).keys());
 
   const calculatePages = () => {
     if (myRef.current) {
       const cardPerPage = Math.floor(myRef.current.offsetWidth / cardWidth);
       setNumberOfCardsPerPage(cardPerPage);
       const pages = Math.ceil(children.length / cardPerPage);
-      setNumberOfPage(pages);
+      setNumberOfPages(pages);
     }
   };
 
@@ -38,14 +38,14 @@ const ReactCardPagination = ({
     return () => window.removeEventListener('resize', calculatePages);
   }, []);
 
-  const rotateRight = () => {
+  const shiftLeft = () => {
     if (numberOfCardsPerPage) {
-      if (isLoopPagination && step === numberOfPage - 1) {
+      if (isLoopPagination && step === numberOfPages - 1) {
         const newCurrentChildren = children;
         const newLeftChildren: React.ReactNode[] = [];
         setCurrentChildren(newCurrentChildren);
         setLeftChildren(newLeftChildren);
-      } else if (step !== numberOfPage - 1) {
+      } else if (step !== numberOfPages - 1) {
         const newCurrentChildren = currentChildren.slice(numberOfCardsPerPage);
         const newLeftChildren = [
           ...leftChildren,
@@ -57,7 +57,7 @@ const ReactCardPagination = ({
     }
   };
 
-  const rotateLeft = () => {
+  const shiftRight = () => {
     if (numberOfCardsPerPage) {
       if (isLoopPagination && step === 0) {
         const sliceLength =
@@ -80,11 +80,11 @@ const ReactCardPagination = ({
     }
   };
 
-  const handleLeftClick = () => {
-    rotateLeft();
+  const handlePreviousClick = () => {
+    shiftRight();
     setStep((prev: number) => {
       if (isLoopPagination && prev - 1 < 0) {
-        return prev + numberOfPage - 1;
+        return prev + numberOfPages - 1;
       }
       if (prev - 1 >= 0) {
         return prev - 1;
@@ -92,13 +92,14 @@ const ReactCardPagination = ({
       return prev;
     });
   };
-  const handleRightClick = () => {
-    rotateRight();
+
+  const handleNextClick = () => {
+    shiftLeft();
     setStep((prev: number) => {
-      if (isLoopPagination && prev + 1 >= numberOfPage) {
-        return prev + 1 - numberOfPage;
+      if (isLoopPagination && prev + 1 >= numberOfPages) {
+        return prev + 1 - numberOfPages;
       }
-      if (prev + 1 < numberOfPage) {
+      if (prev + 1 < numberOfPages) {
         return prev + 1;
       }
       return prev;
@@ -112,7 +113,7 @@ const ReactCardPagination = ({
           disabled={isLoopPagination ? false : step === 0}
           className="navigation-button"
           type="button"
-          onClick={handleLeftClick}
+          onClick={handlePreviousClick}
         >
           <FaChevronLeft />
         </button>
@@ -120,17 +121,17 @@ const ReactCardPagination = ({
           {currentChildren}
         </div>
         <button
-          disabled={isLoopPagination ? false : step === numberOfPage - 1}
+          disabled={isLoopPagination ? false : step === numberOfPages - 1}
           className="navigation-button"
           type="button"
-          onClick={handleRightClick}
+          onClick={handleNextClick}
         >
           <FaChevronRight />
         </button>
       </div>
       {!hidePageIndicatorDots && (
         <div className="dots-container">
-          {numberOfCardsPerPage && numberOfPage
+          {numberOfCardsPerPage && numberOfPages
             ? dotRangeArray.map((index) => (
                 <FaCircle
                   key={`dot-${index}`}
