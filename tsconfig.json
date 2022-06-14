@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "dist/esm",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -15,9 +16,9 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "declaration": true,
-    "declarationDir": "types",
+    "declarationDir": "",
     "emitDeclarationOnly": true
   },
-  "include": ["src/**/*", "rollup.config.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "rollup.config.js", ".eslintrc.js"],
+  "exclude": ["node_modules", "examples/**/*"]
 }

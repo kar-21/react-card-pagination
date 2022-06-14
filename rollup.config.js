@@ -3,19 +3,18 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss';
+import sass from 'rollup-plugin-sass';
 
 import packageJson from './package.json';
 
 export default [
   {
-    input: 'src/react-card-pagination/ReactCardPagination.tsx',
+    input: 'src/index.ts',
     output: [
       {
         file: packageJson.main,
         format: 'cjs',
         sourcemap: true,
-        name: 'react-lib',
       },
       {
         file: packageJson.module,
@@ -28,8 +27,12 @@ export default [
       resolve(),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
-      postcss(),
+      sass({
+        insert: true,
+        output: false,
+      }),
       terser(),
     ],
+    external: [...Object.keys(packageJson.dependencies) || {}]
   },
 ];
