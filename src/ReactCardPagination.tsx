@@ -114,7 +114,6 @@ const ReactCardPagination = ({
 
   return (
     <div className="pagination">
-      {step}
       <div className="outer-container">
         <button
           disabled={isLoopPagination ? false : step === 0}
