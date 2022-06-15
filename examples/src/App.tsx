@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import SampleCardOne from './sampleCards/SampleCardOne';
+import { ReactCardPagination } from 'react-card-pagination';
 import './App.scss';
 
 function App() {
+  const titleOne = 'Cards';
+  const titleTwo = 'Pagination';
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{titleOne}</h1>
+      <SampleCardOne number={0} />
+      <h1>{titleTwo}</h1>
+      <ReactCardPagination
+        cardWidth={470}
+        children={[
+          <SampleCardOne number={1} key="1" />,
+          <SampleCardOne number={2} key="2" />,
+          <SampleCardOne number={3} key="3" />,
+          <SampleCardOne number={4} key="4" />,
+          <SampleCardOne number={5} key="5" />,
+        ]}
+      />
     </div>
   );
 }

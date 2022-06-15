@@ -1,19 +1,25 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import { FaChevronRight, FaChevronLeft, FaCircle } from 'react-icons/fa';
 
 import './reactCardPagination.scss';
-import { ReactCardPaginationType } from './ReactCardPagination.type';
+
+interface ReactCardPaginationType {
+  children: React.ReactNode[];
+  cardWidth: number;
+  isLoopPagination?: boolean;
+  hidePageIndicatorDots?: boolean;
+}
 
 const ReactCardPagination = ({
   children,
   cardWidth,
-  isLoopPagination = true,
-  hidePageIndicatorDots = false,
+  isLoopPagination,
+  hidePageIndicatorDots,
 }: ReactCardPaginationType): JSX.Element => {
   const myRef = useRef<HTMLDivElement>(null);
 
   const [step, setStep] = useState(0);
-  const [numberOfCardsPerPage, setNumberOfCardsPerPage] = useState<number>();
+  const [numberOfCardsPerPage, setNumberOfCardsPerPage] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [currentChildren, setCurrentChildren] = useState(children);
   const [leftChildren, setLeftChildren] = useState<React.ReactNode[]>([]);
@@ -21,7 +27,7 @@ const ReactCardPagination = ({
   const dotRangeArray = Array.from(Array(numberOfPages).keys());
 
   const calculatePages = () => {
-    if (myRef.current) {
+    if (children && myRef?.current) {
       const cardPerPage = Math.floor(myRef.current.offsetWidth / cardWidth);
       setNumberOfCardsPerPage(cardPerPage);
       const pages = Math.ceil(children.length / cardPerPage);
@@ -31,11 +37,11 @@ const ReactCardPagination = ({
 
   useEffect(() => {
     calculatePages();
-  }, [myRef.current]);
+  }, [myRef?.current]);
 
   useLayoutEffect(() => {
-    window.addEventListener('resize', calculatePages);
-    return () => window.removeEventListener('resize', calculatePages);
+      window.addEventListener('resize', calculatePages);
+      return () => window.removeEventListener('resize', calculatePages);
   }, []);
 
   const shiftLeft = () => {
@@ -58,7 +64,7 @@ const ReactCardPagination = ({
   };
 
   const shiftRight = () => {
-    if (numberOfCardsPerPage) {
+    if (numberOfCardsPerPage && children) {
       if (isLoopPagination && step === 0) {
         const sliceLength =
           children.length % numberOfCardsPerPage
@@ -108,6 +114,7 @@ const ReactCardPagination = ({
 
   return (
     <div className="pagination">
+      {step}
       <div className="outer-container">
         <button
           disabled={isLoopPagination ? false : step === 0}
@@ -143,6 +150,11 @@ const ReactCardPagination = ({
       )}
     </div>
   );
+};
+
+ReactCardPagination.defaultProps = {
+  isLoopPagination: true,
+  hidePageIndicatorDots: false,
 };
 
 export default ReactCardPagination;
