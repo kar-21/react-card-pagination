@@ -24,11 +24,19 @@
   }
   .dots-container {
     .dots {
-      fill: gray;
+      color: gray;
       padding: 3px;
+      border-radius: 50%;
+      margin: 3px;
+      width: 21px;
+      border: none;
+      cursor: pointer;
     }
     .selected {
-        fill: black
+      color: black;
+      font-weight: bolder;
+      font-size: medium;
+      width: 24px;
     }
   }
 }

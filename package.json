@@ -54,11 +54,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rollup -c",
+    "watch": "rollup -cw",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "npx eslint .",
-    "build:package": "rollup -c"
+    "lint": "npx eslint ."
   },
   "browserslist": {
     "production": [

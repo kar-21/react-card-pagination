@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
-import { FaChevronRight, FaChevronLeft, FaCircle } from 'react-icons/fa';
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 import './reactCardPagination.scss';
 
@@ -40,8 +40,8 @@ const ReactCardPagination = ({
   }, [myRef?.current]);
 
   useLayoutEffect(() => {
-      window.addEventListener('resize', calculatePages);
-      return () => window.removeEventListener('resize', calculatePages);
+    window.addEventListener('resize', calculatePages);
+    return () => window.removeEventListener('resize', calculatePages);
   }, []);
 
   const shiftLeft = () => {
@@ -112,6 +112,15 @@ const ReactCardPagination = ({
     });
   };
 
+  const clickedOnPage = (pageNumber: number) => {
+    const sliceLength = pageNumber * numberOfCardsPerPage;
+    const newCurrentChildren = children.slice(sliceLength, children.length);
+    const newLeftChildren = children.slice(0, sliceLength);
+    setCurrentChildren(newCurrentChildren);
+    setLeftChildren(newLeftChildren);
+    setStep(pageNumber);
+  };
+
   return (
     <div className="pagination">
       <div className="outer-container">
@@ -139,10 +148,14 @@ const ReactCardPagination = ({
         <div className="dots-container">
           {numberOfCardsPerPage && numberOfPages
             ? dotRangeArray.map((index) => (
-                <FaCircle
+                <button
+                  type="button"
                   key={`dot-${index}`}
+                  onClick={() => clickedOnPage(index)}
                   className={`dots ${step === index ? 'selected' : null}`}
-                />
+                >
+                  {index + 1}
+                </button>
               ))
             : null}
         </div>
