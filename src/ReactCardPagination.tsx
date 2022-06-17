@@ -7,14 +7,14 @@ interface ReactCardPaginationType {
   children: React.ReactNode[];
   cardWidth: number;
   isLoopPagination?: boolean;
-  hidePageIndicatorDots?: boolean;
+  hidePageIndicator?: boolean;
 }
 
 const ReactCardPagination = ({
   children,
   cardWidth,
   isLoopPagination,
-  hidePageIndicatorDots,
+  hidePageIndicator,
 }: ReactCardPaginationType): JSX.Element => {
   const myRef = useRef<HTMLDivElement>(null);
 
@@ -144,7 +144,7 @@ const ReactCardPagination = ({
           <FaChevronRight />
         </button>
       </div>
-      {!hidePageIndicatorDots && (
+      {!hidePageIndicator && (
         <div className="dots-container">
           {numberOfCardsPerPage && numberOfPages
             ? dotRangeArray.map((index) => (
@@ -166,7 +166,7 @@ const ReactCardPagination = ({
 
 ReactCardPagination.defaultProps = {
   isLoopPagination: true,
-  hidePageIndicatorDots: false,
+  hidePageIndicator: false,
 };
 
 export default ReactCardPagination;
