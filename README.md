@@ -1,12 +1,13 @@
-# Getting Started with Create React App
+# React Card Pagination
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a create library defined to display cards in pagination format.
+The child of this library will be rendered in pagination format.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
