@@ -52,13 +52,27 @@ const ReactCardPagination = ({
         setCurrentChildren(newCurrentChildren);
         setLeftChildren(newLeftChildren);
       } else if (step !== numberOfPages - 1) {
-        const newCurrentChildren = currentChildren.slice(numberOfCardsPerPage);
-        const newLeftChildren = [
-          ...leftChildren,
-          ...currentChildren.slice(0, numberOfCardsPerPage),
-        ];
-        setCurrentChildren(newCurrentChildren);
-        setLeftChildren(newLeftChildren);
+        const firstCard = myRef.current?.children[0];
+        firstCard?.setAttribute(
+          'style',
+          `margin-left: -${
+            cardWidth * numberOfCardsPerPage
+          }px; transition-duration: 0.5s;`,
+        );
+        setTimeout(() => {
+          firstCard?.setAttribute(
+            'style',
+            `margin-left: unset; transition-duration: unset;`,
+          );
+          const newCurrentChildren =
+            currentChildren.slice(numberOfCardsPerPage);
+          const newLeftChildren = [
+            ...leftChildren,
+            ...currentChildren.slice(0, numberOfCardsPerPage),
+          ];
+          setCurrentChildren(newCurrentChildren);
+          setLeftChildren(newLeftChildren);
+        }, 500);
       }
     }
   };
@@ -82,6 +96,22 @@ const ReactCardPagination = ({
         const newLeftChildren = leftChildren?.slice(0, -numberOfCardsPerPage);
         setCurrentChildren(newCurrentChildren);
         setLeftChildren(newLeftChildren);
+        setTimeout(() => {
+          const firstCard = myRef.current?.children[0];
+          firstCard?.setAttribute(
+            'style',
+            `margin-left: -${cardWidth * numberOfCardsPerPage}px;`,
+          );
+          setTimeout(() => {
+            firstCard?.setAttribute('style', `transition-duration: 0.5s;`);
+          });
+          setTimeout(() => {
+            firstCard?.setAttribute(
+              'style',
+              `margin-left: unset; transition-duration: unset;`,
+            );
+          }, 500);
+        });
       }
     }
   };

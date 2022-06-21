@@ -55,7 +55,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "rollup -c",
-    "postbuild": "cp -r dist ./examples/node_modules/react-card-pagination",
     "watch": "rollup -cw",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
