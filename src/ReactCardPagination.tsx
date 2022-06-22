@@ -51,7 +51,30 @@ const ReactCardPagination = ({
         const newLeftChildren: React.ReactNode[] = [];
         setCurrentChildren(newCurrentChildren);
         setLeftChildren(newLeftChildren);
+        setTimeout(() => {
+          const firstCard = myRef.current?.children[0];
+          firstCard?.setAttribute(
+            'style',
+            `margin-left: -${
+              cardWidth * numberOfCardsPerPage * (numberOfPages - 1)
+            }px;`,
+          );
+          setTimeout(() => {
+            firstCard?.setAttribute('style', `transition-duration: 0.5s;`);
+          });
+          setTimeout(() => {
+            firstCard?.setAttribute(
+              'style',
+              `margin-left: unset; transition-duration: unset;`,
+            );
+          }, 500);
+        });
       } else if (step !== numberOfPages - 1) {
+        const newCurrentChildren = currentChildren.slice(numberOfCardsPerPage);
+        const newLeftChildren = [
+          ...leftChildren,
+          ...currentChildren.slice(0, numberOfCardsPerPage),
+        ];
         const firstCard = myRef.current?.children[0];
         firstCard?.setAttribute(
           'style',
@@ -64,12 +87,6 @@ const ReactCardPagination = ({
             'style',
             `margin-left: unset; transition-duration: unset;`,
           );
-          const newCurrentChildren =
-            currentChildren.slice(numberOfCardsPerPage);
-          const newLeftChildren = [
-            ...leftChildren,
-            ...currentChildren.slice(0, numberOfCardsPerPage),
-          ];
           setCurrentChildren(newCurrentChildren);
           setLeftChildren(newLeftChildren);
         }, 500);
@@ -88,8 +105,21 @@ const ReactCardPagination = ({
               numberOfCardsPerPage;
         const newCurrentChildren = children.slice(sliceLength, children.length);
         const newLeftChildren = children.slice(0, sliceLength);
-        setCurrentChildren(newCurrentChildren);
-        setLeftChildren(newLeftChildren);
+        const firstCard = myRef.current?.children[0];
+        firstCard?.setAttribute(
+          'style',
+          `margin-left: -${
+            cardWidth * numberOfCardsPerPage * (numberOfPages - 1)
+          }px; transition-duration: 0.5s;`,
+        );
+        setTimeout(() => {
+          firstCard?.setAttribute(
+            'style',
+            `margin-left: unset; transition-duration: unset;`,
+          );
+          setCurrentChildren(newCurrentChildren);
+          setLeftChildren(newLeftChildren);
+        }, 500);
       } else if (step !== 0) {
         const slicedLeft = leftChildren?.slice(-numberOfCardsPerPage);
         const newCurrentChildren = [...slicedLeft, ...currentChildren];

@@ -7863,7 +7863,7 @@ react-app-polyfill@^3.0.0:
 
 react-card-pagination@../react-card-pagination-0.1.0.tgz:
   version "0.1.0"
-  resolved "../react-card-pagination-0.1.0.tgz#8c07c12a29e63bd3b9a1969f12a7286b563bad63"
+  resolved "../react-card-pagination-0.1.0.tgz#edb16d32f23346ee37b44b55e35df322875cd0ba"
   dependencies:
     "@testing-library/jest-dom" "^5.16.4"
     "@testing-library/react" "^13.3.0"
